@@ -3,6 +3,10 @@ package jvm;
 import java.util.HashMap;
 import java.util.WeakHashMap;
 
+/**
+ * 传统的HashMap就算key==null了，也不会回收键值对。
+ * 但是如果是WeakHashMap，一旦内存不够用时，且key==null时，会回收这个键值对
+ */
 public class WeakHashMapDemo {
     public static void main(String[] args) {
         myHashMap();
@@ -18,6 +22,7 @@ public class WeakHashMapDemo {
         System.out.println(map);
 
         key = null;
+        map.put(key,"key is null");
         System.out.println(map);
         System.gc();
         System.out.println(map + "\t" + map.size());
@@ -31,6 +36,7 @@ public class WeakHashMapDemo {
         System.out.println(map);
 
         key = null;
+        map.put(key,"key is null");
         System.out.println(map);
 
         System.gc();

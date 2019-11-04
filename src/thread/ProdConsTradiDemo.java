@@ -11,6 +11,13 @@ import java.util.concurrent.locks.ReentrantLock;
  * 3 防止虚假唤醒机制
  */
 public class ProdConsTradiDemo {
+
+    /**
+     *
+     * 这个也可以看做是一个生产者消费者模式，并且使用了，条件类进行了线程的等待和唤醒
+     *
+     */
+
     public static void main(String[] args) {
         ShareData shareData = new ShareData();
 
@@ -35,6 +42,7 @@ public class ProdConsTradiDemo {
         }, "Consumer").start();
 
     }
+
 }
 
 class ShareData {

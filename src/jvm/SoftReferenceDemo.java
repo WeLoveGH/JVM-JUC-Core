@@ -2,6 +2,10 @@ package jvm;
 
 import java.lang.ref.SoftReference;
 
+/**
+ * 需要用Object.Reference.SoftReference来显示创建。
+ * 如果内存够，GC的时候不回收。内存不够，则回收 。常用于内存敏感的应用，比如高速缓
+ */
 public class SoftReferenceDemo {
     public static void main(String[] args) {
         softRef_Memory_Enough();

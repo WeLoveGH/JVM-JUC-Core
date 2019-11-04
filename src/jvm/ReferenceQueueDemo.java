@@ -3,6 +3,10 @@ package jvm;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 
+/**
+ * 弱引用、虚引用被回收后，会被放到引用队列里面，通过poll方法可以得到。
+ * 关于引用队列和弱、虚引用的配合使用
+ */
 public class ReferenceQueueDemo {
     public static void main(String[] args) throws InterruptedException {
         Object o1 = new Object();

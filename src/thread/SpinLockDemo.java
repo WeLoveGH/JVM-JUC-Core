@@ -7,6 +7,7 @@ public class SpinLockDemo {
     AtomicReference<Thread> atomicReference = new AtomicReference<>();
 
     public static void main(String[] args) {
+
         SpinLockDemo spinLockDemo = new SpinLockDemo();
         new Thread(() -> {
             spinLockDemo.myLock();
@@ -34,6 +35,10 @@ public class SpinLockDemo {
             spinLockDemo.myUnlock();
         }, "BB").start();
     }
+
+    /**
+     * 自旋，获取锁
+     */
 
     public void myLock() {
         Thread thread = Thread.currentThread();

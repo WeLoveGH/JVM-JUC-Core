@@ -5,6 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class SyncAndReenLockDemo {
+
     public static void main(String[] args) {
         ShareResource shareResource = new ShareResource();
         new Thread(() -> {
@@ -12,11 +13,13 @@ public class SyncAndReenLockDemo {
                 shareResource.print5();
             }
         }, "A").start();
+
         new Thread(() -> {
             for (int i = 0; i < 10; i++) {
                 shareResource.print10();
             }
         }, "B").start();
+
         new Thread(() -> {
             for (int i = 0; i < 10; i++) {
                 shareResource.print15();
@@ -96,4 +99,11 @@ class ShareResource {
             lock.unlock();
         }
     }
+
+    /**
+     *
+     * 控制三个线程，分别循环10次，进行他们的业务曹邹，注意：三个线程间的循环是串行执行的
+     *
+     *
+     */
 }

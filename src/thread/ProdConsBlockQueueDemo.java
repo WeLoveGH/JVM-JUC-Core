@@ -6,6 +6,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ProdConsBlockQueueDemo {
+
+    /**
+     * 生产者-消费者模式
+     * 生产者：生产消息，将消息放入队列
+     * 消费者：消费消息，将消息取出队列
+     *
+     * @param args
+     */
+
     public static void main(String[] args) {
         MyResource myResource = new MyResource(new ArrayBlockingQueue<>(10));
         new Thread(() -> {
@@ -35,6 +44,7 @@ public class ProdConsBlockQueueDemo {
         System.out.println("5秒钟后，叫停");
         myResource.stop();
     }
+
 }
 
 class MyResource {
@@ -47,11 +57,16 @@ class MyResource {
         this.blockingQueue = blockingQueue;
     }
 
+    /**
+     * 生产消息
+     * @throws Exception
+     */
     public void myProd() throws Exception {
         String data = null;
         boolean retValue;
         while (FLAG) {
             data = atomicInteger.incrementAndGet() + "";//++i
+            //插入成功，返回true，否则返回false
             retValue = blockingQueue.offer(data, 2L, TimeUnit.SECONDS);
             if (retValue) {
                 System.out.println(Thread.currentThread().getName() + "\t" + "插入队列" + data + "成功");
@@ -63,9 +78,14 @@ class MyResource {
         System.out.println(Thread.currentThread().getName() + "\tFLAG==false，停止生产");
     }
 
+    /**
+     * 消费消息
+     * @throws Exception
+     */
     public void myCons() throws Exception {
         String res;
         while (FLAG) {
+            //从队头取数据，队空时取出的为null
             res = blockingQueue.poll(2L, TimeUnit.SECONDS);
             if (null == res || res.equalsIgnoreCase("")) {
                 FLAG = false;

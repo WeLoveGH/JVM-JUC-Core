@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class ReadWriteLockDemo {
+
     public static void main(String[] args) {
         MyCache cache = new MyCache();
         //写
@@ -13,16 +14,18 @@ public class ReadWriteLockDemo {
             final int tempInt = i;
             new Thread(() -> {
                 cache.put(tempInt + "", tempInt + "");
-            }, String.valueOf(i)).start();
+            }, "write thread "+String.valueOf(i)).start();
         }
+
         //读
         for (int i = 1; i <= 5; i++) {
             final int tempInt = i;
             new Thread(() -> {
                 cache.get(tempInt + "");
-            }, String.valueOf(i)).start();
+            }, "read thread "+String.valueOf(i)).start();
         }
     }
+
 }
 
 class MyCache {
@@ -30,6 +33,12 @@ class MyCache {
     private volatile Map<String, Object> map = new HashMap<>();
     private ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
 
+
+    /**
+     * 写缓存使用写锁
+     * @param key
+     * @param value
+     */
     public void put(String key, Object value) {
         rwLock.writeLock().lock();
         try {
@@ -49,6 +58,10 @@ class MyCache {
         }
     }
 
+    /**
+     * 读缓存使用读锁
+     * @param key
+     */
     public void get(String key) {
         rwLock.readLock().lock();
         try {

@@ -5,6 +5,7 @@ import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 
 public class SynchronousQueueDemo {
+
     public static void main(String[] args) {
         BlockingQueue<String> blockingQueue=new SynchronousQueue<String>();
         new Thread(()->{
@@ -18,7 +19,7 @@ public class SynchronousQueueDemo {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        },"AAA").start();
+        },"生产线程").start();
 
         new Thread(()->{
             try {
@@ -31,6 +32,12 @@ public class SynchronousQueueDemo {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        },"BBB").start();
+        },"消费线程").start();
     }
+
+    /**
+     *
+     * 队列只有一个元素，如果想插入多个，必须等队列元素取出后，才能插入，只能有一个“坑位”，用一个插一个。
+     *
+     */
 }

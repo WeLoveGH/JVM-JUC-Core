@@ -3,12 +3,14 @@ package thread;
 import java.util.concurrent.TimeUnit;
 
 public class DeadLockDemo {
+
     public static void main(String[] args) {
         String lockA = "lockA";
         String lockB = "lockB";
         new Thread(new HoldLockThread(lockA, lockB), "ThreadA").start();
         new Thread(new HoldLockThread(lockB, lockA), "ThreadB").start();
     }
+
 }
 
 class HoldLockThread implements Runnable {

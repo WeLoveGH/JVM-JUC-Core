@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class VolatileDemo {
+
     public static void main(String[] args) {
         volatileVisibilityDemo();
         atomicDemo();
@@ -52,8 +53,8 @@ public class VolatileDemo {
 }
 
 class MyData{
-    int number=0;
-    //volatile int number=0;
+    //int number=0;
+    volatile int number=0;
 
     AtomicInteger atomicInteger=new AtomicInteger();
     public void setTo60(){

@@ -4,6 +4,20 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicStampedReference;
 
+
+/**
+ * 所谓ABA问题，就是比较并交换的循环，存在一个时间差，而这个时间差可能带来意想不到的问题。
+ * 比如线程T1将值从A改为B，然后又从B改为A。
+ * 线程T2看到的就是A，但是却不知道这个A发生了更改 。
+ * 尽管线程T2 CAS操作成功，但不代表就没有问题。
+ * 有的需求，比如CAS，只注重头和尾 ，只要首尾一致就接受。
+ * 但是有的需求，还看重过程，中间不能发生任何修改，这就引出了AtomicReference原子引用
+ *
+ *
+ * 使用AtomicStampedReference类可以解决ABA问题。这个类维护了一个“版本号”Stamp，在进行CAS操作的时候，不仅要比较当前值，还要比较版本号。
+ * 只有两者都相等，才执行更新操作。
+ *
+ */
 public class ABADemo {
     static AtomicReference<Integer> atomicReference = new AtomicReference<>(100);
     static AtomicStampedReference<Integer> atomicStampedReference = new AtomicStampedReference<>(100, 1);
